@@ -181,7 +181,7 @@ if audio_transcription.find(model_in_text) == -1:
 else:
     # If mistake "An error occurred: argument of type 'NoneType' is not iterable" create a file called ZOOCAD.stl
     def handle_cad_creation(prompt):
-        client = Client(token="018e3c3a-6c19-788c-a05d-4c5a37bb128e")
+        client = Client(token="")
 
         try:
             print("Attempting to create CAD model...")
@@ -295,30 +295,6 @@ else:
     # Once the file is stable, run another script
     run_python_script(script_path)
 
-
-    '''
-    def run_python_script(script_path):
-    # Replace 'python' with 'python3' if necessary on your system
-        subprocess.call(['python3', script_path])
-
-    def check_and_run_script(file_path, script_path):
-        while True:
-            if os.path.exists(file_path):
-                if os.path.getsize(file_path) > 0:
-                    print(f"{file_path} found and not empty, running script...")
-                    run_python_script(script_path)
-                    break
-                else:
-                    print(f"{file_path} exists but is empty. Waiting for file to be populated...")
-            else:
-                print(f"Waiting for {file_path} creation.")
-            time.sleep(20)
-
-    # Example usage
-
-    check_and_run_script(file_path, script_path)
-    
-'''
     
 
 
