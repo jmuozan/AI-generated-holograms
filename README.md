@@ -312,8 +312,24 @@ pip install -r requirements.txt
 
 ![](./IMG_MD/Rhino_Box.png)
 
+Once all the code was done, we decided to make an artifact to help us show the AI generated holograms. The box, consists of a top 'box' hiding the screen made in plywood, the pyramid made in PETG, the base also made in plywood holding the pyramid in place with different frames stuck in place by transversal unions and the columns made out of acrylic. Our screen measured 30x26 so all our files are based on that top box measure. As shown before the method for showing the holograms we used was pepper ghost projected in pyramid. For that reason, we needed to created a grasshopper script that respects the 45 degree angles and can be scaled as the user wish. 
 
 
-## - Final results
 
-![](./IMG_MD/Captura_P.png)
+The whole artifact consists of 32 pieces + the screen. All the dxf plans are available in the folder ```CAD_FOR_HOLOGRAM```. All the unions are finger type unions so glue will only be necessary to fix them. 
+
+![](./IMG_MD/DXF.png)
+
+![](./IMG_MD/EXPLODED.png)
+
+
+
+## - Final results and conclusions
+
+![]()
+
+We are happy with the final result but we would've love to have a newer screen to test it as the brightness wasn't that high and we could barely see it in normal conditions lightning. Even with that, our project underscores the potential of combining advanced software with hardware to create immersive visual experiences. Through a detailed instructions and a well-documented process, we provide a blueprint for others to replicate or build upon our work. This endeavor not only showcases the practical application of emerging technologies in creative industries but also highlights the importance of interdisciplinary collaboration in pushing the boundaries of what is possible.
+
+The successful execution of our project opens up new avenues for exploration in the realm of digital art, education, and entertainment, offering a glimpse into a future where ideas can be visualized in three-dimensional space with ease. As this technology continues to evolve, it holds the promise of further democratizing the creation of holographic content, making it accessible to a broader audience and inspiring the next generation of creators.
+
+If you have any doubts or have more Ideas on how to make it better don't hesitate to reach us. We will be more than happy to talk.
