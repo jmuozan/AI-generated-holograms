@@ -102,7 +102,7 @@ ffmpeg_output_path = '/Users/jorgemuyo/Desktop/Challenge/VIDEO/DEFINITIVE_HOLOGR
 
 # FFmpeg command to convert and resize the video
 ffmpeg_command = [
-    '/opt/homebrew/bin/ffmpeg',  # Ensure this path matches the location of ffmpeg on your system
+    '/opt/homebrew/bin/ffmpeg',  # path of ffmpeg 
     '-i', ffmpeg_input_path,
     '-c:v', 'libx264',
     '-crf', '23',
