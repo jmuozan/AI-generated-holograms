@@ -29,4 +29,4 @@ The script automates the creation of a hologram from spoken words by transformin
 
 ## *- Final results*
 
-![](/Users/jorgemuyo/Desktop/MDEF/MDEF_WEB/AI-generated-holograms/IMG_MD/Captura_P.png)
+![](./IMG_MD/Captura_P.png)
