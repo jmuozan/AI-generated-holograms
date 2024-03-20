@@ -241,6 +241,8 @@ With the lights ready we set up a simple animation of the object spinning 360 de
 
 To change the smoothness of the animation we added the 'BEZIER' interpolation so it's not a linear movement. This can be simply changed by adding 'LINEAR' instead of 'BEZIER'. 
 
+***Important note:** The rotation is specified in radians not degrees, for that reason you'll see in the code  ```3.14159 * 2``` which means *2PI = 360 degrees*
+
 For the material we decided to add a procedural material that changes as the animation does, scaling the noise textures added on each keyframe of the animation. You can change the color on the following line:
 
 ```python
@@ -268,13 +270,32 @@ The animation won't render automatically unless this last piece of code is added
 bpy.ops.render.render(animation=True)
 ```
 
-
-
-
-
-
+![](./IMG_MD/Animation.gif)
 
 ### *Hologram_Video_Layout.py*
+
+The last piece of code that will be executed will be ```Hologram_Video_Layout.py``` to generate the proper layout for hologram uses. As we are using the pepper ghost effect in a pyramid, Our video output should be a video copied and rotated 4 times around the center of the screen all separated the same amount. 
+
+![https://naziafakhruddin.medium.com/making-3d-hologram-5197f76b07a5](./IMG_MD/Pepperghost.jpeg)
+
+![](./IMG_MD/HOLOGRAM.gif)
+
+***Important note using Hologram Layout code:** If you're using a pyramid like the one in the picture above make sure to change the direction of rotation as the videos will be inverted and in consequence the hologram will be too. Inside the definition ```create_hologram_layout``` go to the loop ```for``` and change ```k=-i``` for ```k=i```.
+
+Depending on the size of the video file that will be used as an input, the distance and size of the different videos inside the final hologram layout video will have to be changed. To do it I recommend playing around with all the following values to find the most accurate one. 
+
+```python
+    video_width, video_height = 2500, 2500  
+    
+    base_separation = 1000
+    additional_push = 300 
+
+    output_width = int(0.6 * video_width + 7 * base_separation + 10 * additional_push)
+    output_height = int(0.6 * video_height + 7 * base_separation + 10 * additional_push)
+```
+
+To make this code fully work you'll need to have installed ```ffmpeg``` in your computer. [Here](https://formulae.brew.sh/formula/ffmpeg) you'll find the homebrew page to download it in case you have a Mac.
+
 ### *text_to_cad.py*
 
 This file is used to properly call ZOOCAD to generate the 3D models. ***THIS FILE IS NOT OURS*** it has been taken from [Modmatrix](https://modmatrix.app/) created by Christian Ernst, you can check his repo [here](https://github.com/chris-ernst/modmatrix-ai). This file should be included in your files as it's called in ```main.py``` 
@@ -288,6 +309,10 @@ pip install -r requirements.txt
 ```
 
 ## - Artifact
+
+![](./IMG_MD/Rhino_Box.png)
+
+
 
 ## - Final results
 
