@@ -121,15 +121,171 @@ This will be the main script that will control everything else. The script consi
       run_python_script(script_path)
   ```
 
-- **else:** This part of the script will be executed if the user says ```model``` in ```audio_transcription``` 
+- **else:** This part of the script will be executed if the user says ```model``` in ```audio_transcription```.
+
+   If the user asks for a model, the script will use ZOOCAD to generate an ```.stl``` file. 
+
+  ***Common error:** Sometimes the script will give an error ```An error occurred: argument of type 'NoneType' is not iterable``` if that's the case, delete create a file called ```ZOOCAD.stl``` in the output folder. 
+
+  Once created the file, the script will open blender.
+
+  ```python
+  path_to_blender = "/Users/jorgemuyo/Desktop/Challenge/Blender_CAD.blend"
+  subprocess.run(["open", path_to_blender])
+  ```
+
+  Blender will start running the script ```Blender_CAD.py``` rendering the scene while ```main.py``` keeps getting executed. For that reason, the definition ```open_file``` will wait until the mp4 rendering output weighs more than 0 mb.
+  ```python
+  def open_file(path):
+          subprocess.call(['open', path])
+          while True:
+              if os.path.exists(file_path):
+                  if os.path.getsize(file_path) > 0:  
+                      print(f"{file_path} found and not empty, opening file...")
+                      open_file(file_path)
+                      break  
+                  else:
+                      print(f"{file_path} exists but is empty. Waiting for file to be populated...")
+              else:
+                  print(f"Waiting for {file_path} creation.")
+                  time.sleep(40)
+  ```
+  
+  Once the file is ready, once again ```Hologram_Video_Layout.py``` will get executed and the script will wait for the file to be ready using again ```file_modification_stable``` and ```run_python_script```. At the end, the video will run itself.
+  
+  ```python
+  open_file(path_to_video)
+  ```
 
 ### *Blender_CAD.py*
+
+To automate Blender once it's automatically open by ```main.py``` we will use blender scripting, based on python. 
+
+![](./IMG_MD/Blender_scripting_1.png)
+
+![](./IMG_MD/Blender_scripting_2.png)
+
+On the right side window you will be able to write your python script. To control Blender with python you'll always need to import the library ```bpy``` All the documentation on how to use the following library can be found [here👈](https://docs.blender.org/api/current/index.html) 
+
+***Notes before starting coding in Blender:** To have automatically loaded once Blender is started you'll need to have them assigned to a Blender file ```.blend``` in this repo we added ```Blender_CAD.blend``` where the script is already loaded. In case it doesn't work or you want to add a new one you'll have to do it form the scripting tab > text > \- [x] Register. 
+
+![](./IMG_MD/Register_Script.png)
+
+The code will create a simple animation of with the ai created model adding a material and a spin. 
+
+***Problem importing:** the first part of the code will, on one side clear the scene by selecting all the objects and deleting them and then importing the ```.stl``` generated file. If you get a similar error to the following:
+
+```shell
+Python: Traceback (most recent call last):
+  File "/blender_CAD.py", line 9, in <module>
+  File "/Applications/Blender.app/Contents/Resources/4.0/scripts/modules/bpy/ops.py", line 109, in __call__
+    ret = _op_call(self.idname_py(), kw)
+RuntimeError: Error: Python: Traceback (most recent call last):
+  File "/Applications/Blender.app/Contents/Resources/4.0/scripts/addons/io_mesh_stl/__init__.py", line 128, in execute
+    tris, tri_nors, pts = stl_utils.read_stl(path)
+  File "/Applications/Blender.app/Contents/Resources/4.0/scripts/addons/io_mesh_stl/stl_utils.py", line 251, in read_stl
+    with open(filepath, 'rb') as data:
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/jorgemuyo/Desktop/Challenge/ZOOCAD.stl'
+Location: /Applications/Blender.app/Contents/Resources/4.0/scripts/modules/bpy/ops.py:109
+
+```
+
+Try add 'r' before your path ```r'/your/path/here'```.
+
+As the object size varies drastically in the current state of ZOOCAD, the script tries to solve it by scaling all the objects to a bounding box where the user will be able to change the size to the desired one. In our case we created a 10x10x10 cube.
+
+```python
+target_dimensions = Vector((10.0, 10.0, 10.0))
+```
+
+Once the object is scaled to the desired volume, the code will move it to the world center.
+
+```python
+obj.location = (0, 0, 0)
+```
+
+After this the first thing to add is the lighting. In this case we opted for a two point lighting set up, one from the top and the other one from the side. The setup will look something like this:
+
+```python
+# Adding lights
+    bpy.ops.object.light_add(type='POINT', location=(0, 0, 10))
+    top_light = bpy.context.object
+    top_light.data.energy = 2000  # Light intensity
+
+    bpy.ops.object.light_add(type='POINT', location=(0, -10, 5))
+    back_light = bpy.context.object
+    back_light.data.energy = 1000  # Light intensity
+    back_light.rotation_euler = (0.785398, 0, 0)
+```
+
+With the lights ready we set up a simple animation of the object spinning 360 degrees on the z axis.
+
+```python
+# Animation
+    bpy.context.scene.frame_start = 1
+    start_frame = 1
+    bpy.context.scene.frame_end = 250
+    end_frame = 250
+
+    obj.rotation_euler = (0, 0, 0)
+    obj.keyframe_insert(data_path="rotation_euler", frame=start_frame)
+    obj.rotation_euler = (0, 0, 3.14159 * 2) 
+    obj.keyframe_insert(data_path="rotation_euler", frame=end_frame)
+
+    fcurves = obj.animation_data.action.fcurves
+    for fcurve in fcurves:
+        for keyframe_point in fcurve.keyframe_points:
+            keyframe_point.interpolation = 'BEZIER'
+
+```
+
+To change the smoothness of the animation we added the 'BEZIER' interpolation so it's not a linear movement. This can be simply changed by adding 'LINEAR' instead of 'BEZIER'. 
+
+For the material we decided to add a procedural material that changes as the animation does, scaling the noise textures added on each keyframe of the animation. You can change the color on the following line:
+
+```python
+    colorramp_node.color_ramp.elements[0].color = (1, 0, 0, 1)  # RED
+    colorramp_node.color_ramp.elements[1].color = (0, 0, 1, 1)  # BLUE
+```
+
+Lastly, after adding a camera were the position, focus and rotation is fully controlable, we added the rendering setup. Where the codec, format, quality, proportion, resolution and fps are fully controllable. If you're interested in generating the holograms by using all our code I would recommend not to change neither the encoder and the output format or the proportion as it will affect ```Hologram_Video_Layout.py``` execution.
+
+```python
+bpy.context.scene.render.filepath = '/Users/jorgemuyo/Desktop/Challenge/rendered_blender_video.mp4' 
+    bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
+    bpy.context.scene.render.ffmpeg.format = 'MPEG4'
+    bpy.context.scene.render.ffmpeg.codec = 'H264'
+    bpy.context.scene.render.ffmpeg.constant_rate_factor = 'MEDIUM'
+    bpy.context.scene.render.resolution_x = 2500
+    bpy.context.scene.render.resolution_y = 2500
+    bpy.context.scene.render.resolution_percentage = 100
+    bpy.context.scene.render.fps = 24
+```
+
+The animation won't render automatically unless this last piece of code is added.
+
+```python
+bpy.ops.render.render(animation=True)
+```
+
+
+
+
 
 
 
 ### *Hologram_Video_Layout.py*
 ### *text_to_cad.py*
+
+This file is used to properly call ZOOCAD to generate the 3D models. ***THIS FILE IS NOT OURS*** it has been taken from [Modmatrix](https://modmatrix.app/) created by Christian Ernst, you can check his repo [here](https://github.com/chris-ernst/modmatrix-ai). This file should be included in your files as it's called in ```main.py``` 
+
 ### *requirements.txt*
+
+This file included in the repo is a text file that includes all the libraries used in the ```main.py``` python script. This file will give users an easier way to install all the libraries at once. Execute in your virtual environment the following code:
+
+```shell
+pip install -r requirements.txt
+```
 
 ## - Artifact
 
