@@ -6,18 +6,17 @@ bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete()
 
 # Import STL file
-bpy.ops.import_mesh.stl(filepath='/Users/jorgemuyo/Desktop/Challenge/ZOOCAD.stl')  # Update the filepath accordingly
+bpy.ops.import_mesh.stl(filepath='/Users/jorgemuyo/Desktop/Challenge/ZOOCAD.stl')  
 
-# Assuming the imported STL file becomes the active object, we rename it for consistency
 imported_objects = bpy.context.selected_objects
 if imported_objects:
     obj = imported_objects[0]
     obj.name = "ImportedSTL"
 
-    # Define the target bounding box dimensions for a 10x10x10 volume
+    # Define the target bounding box dimensions
     target_dimensions = Vector((10.0, 10.0, 10.0))
 
-    # Calculate the current bounding box dimensions of the object
+    # Calculate the current bounding box dimensions
     obj_dimensions = obj.dimensions
     scale_factors = Vector((target_dimensions.x / obj_dimensions.x if obj_dimensions.x else 1,
                             target_dimensions.y / obj_dimensions.y if obj_dimensions.y else 1,
@@ -37,17 +36,17 @@ if imported_objects:
     bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')
     obj.location = (0, 0, 0)  # Move object to world origin
 
-    # Add lights
+    # Lights
     bpy.ops.object.light_add(type='POINT', location=(0, 0, 10))
     top_light = bpy.context.object
-    top_light.data.energy = 2000  # Adjust light intensity as needed
+    top_light.data.energy = 2000
 
     bpy.ops.object.light_add(type='POINT', location=(0, -10, 5))
     back_light = bpy.context.object
-    back_light.data.energy = 1000  # Adjust light intensity as needed
-    back_light.rotation_euler = (0.785398, 0, 0)  # Pointing towards the object, adjust angle as needed
+    back_light.data.energy = 1000  
+    back_light.rotation_euler = (0.785398, 0, 0)  
 
-    # Animation setup
+    # Animation
     bpy.context.scene.frame_start = 1
     start_frame = 1
     bpy.context.scene.frame_end = 250
@@ -55,7 +54,7 @@ if imported_objects:
 
     obj.rotation_euler = (0, 0, 0)
     obj.keyframe_insert(data_path="rotation_euler", frame=start_frame)
-    obj.rotation_euler = (0, 0, 3.14159 * 2)  # 2*pi radians = 360 degrees
+    obj.rotation_euler = (0, 0, 3.14159 * 2)  # Radians
     obj.keyframe_insert(data_path="rotation_euler", frame=end_frame)
 
     fcurves = obj.animation_data.action.fcurves
@@ -63,11 +62,11 @@ if imported_objects:
         for keyframe_point in fcurve.keyframe_points:
             keyframe_point.interpolation = 'BEZIER'
 
-    # Add a procedural material that changes over time
+    # Material
     material = bpy.data.materials.new(name="ProceduralMaterial")
     material.use_nodes = True
     nodes = material.node_tree.nodes
-    nodes.clear()  # Clear default nodes
+    nodes.clear() 
 
     output_node = nodes.new(type='ShaderNodeOutputMaterial')
     bsdf_node = nodes.new(type='ShaderNodeBsdfPrincipled')
@@ -92,7 +91,7 @@ if imported_objects:
     texture_node.inputs['Scale'].default_value = 25.0
     texture_node.inputs['Scale'].keyframe_insert(data_path="default_value", frame=end_frame)
 
-    # Add a camera to the scene
+    # Camera
     bpy.ops.object.camera_add(location=(10, -10, 10))
     camera = bpy.context.object
     camera.data.lens = 35
@@ -100,11 +99,11 @@ if imported_objects:
     camera.rotation_euler = (0.785398, 0, 0.785398)
     bpy.context.scene.camera = camera
     
-    # Enable transparent background
+    # Transparent background
     bpy.context.scene.render.film_transparent = True
 
-    # Rendering setup
-    bpy.context.scene.render.filepath = '/Users/jorgemuyo/Desktop/Challenge/rendered_blender_video.mp4'  # Update the filepath accordingly
+    # Rendering
+    bpy.context.scene.render.filepath = '/Users/jorgemuyo/Desktop/Challenge/rendered_blender_video.mp4' 
     bpy.context.scene.render.image_settings.file_format = 'FFMPEG'
     bpy.context.scene.render.ffmpeg.format = 'MPEG4'
     bpy.context.scene.render.ffmpeg.codec = 'H264'
