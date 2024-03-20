@@ -42,7 +42,7 @@ recognizer = sr.Recognizer()
 #Record a audio and get text
 with sr.Microphone() as source:
     print("Say something!")
-    audio = recognizer.listen(source, 3, 8)
+    audio = recognizer.listen(source, 3, 8) # 3: Number of seconds listening until something is detected, 8: Number of seconds listening
 
 audio_transcription = recognizer.recognize_google(audio)
 print(audio_transcription)
@@ -106,7 +106,6 @@ if audio_transcription.find(model_in_text) == -1:
     print("no model")
     #descriptive_text = openAI_call(audio_transcription)
 
-    # print(dall_e_prompt)
     response = openAI_client.images.generate(
         model="dall-e-3",
         prompt=complete_prompt,
@@ -136,14 +135,6 @@ if audio_transcription.find(model_in_text) == -1:
 
 
     def file_modification_stable(file_path, stability_duration=60, check_interval=40, timeout=3600):
-        """
-        Waits for a file's modification time to be stable for a given duration.
-        Args:
-            file_path: The path to the file to monitor.
-            stability_duration: The duration (in seconds) for which the file's modification time should be stable.
-            check_interval: How often (in seconds) to check the file's modification time.
-            timeout: The maximum time to wait in seconds.
-        """
         start_time = time.time()
         last_mod_time = None
         stable_start_time = None
@@ -168,11 +159,6 @@ if audio_transcription.find(model_in_text) == -1:
             time.sleep(check_interval)
 
     def run_python_script(script_path):
-        """
-        Executes a Python script.
-        Args:
-            script_path: The path to the Python script to run.
-        """
         print(f"Running script {script_path}...")
         subprocess.run(["python", script_path], check=True)
 
