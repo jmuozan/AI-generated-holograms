@@ -314,7 +314,7 @@ pip install -r requirements.txt
 
 Once all the code was done, we decided to make an artifact to help us show the AI generated holograms. The box, consists of a top 'box' hiding the screen made in plywood, the pyramid made in PETG, the base also made in plywood holding the pyramid in place with different frames stuck in place by transversal unions and the columns made out of acrylic. Our screen measured 30x26 so all our files are based on that top box measure. As shown before the method for showing the holograms we used was pepper ghost projected in pyramid. For that reason, we needed to created a grasshopper script that respects the 45 degree angles and can be scaled as the user wish. 
 
-
+![](./IMG_MD/Gif_grasshopper.gif)
 
 The whole artifact consists of 32 pieces + the screen. All the dxf plans are available in the folder ```CAD_FOR_HOLOGRAM```. All the unions are finger type unions so glue will only be necessary to fix them. 
 
