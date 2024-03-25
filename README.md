@@ -169,7 +169,7 @@ On the right side window you will be able to write your python script. To contro
 
 ***Notes before starting coding in Blender:** To have automatically loaded once Blender is started you'll need to have them assigned to a Blender file ```.blend``` in this repo we added ```Blender_CAD.blend``` where the script is already loaded. In case it doesn't work or you want to add a new one you'll have to do it form the scripting tab > text > \- [x] Register. 
 
-![](./IMG_MD/Register_Script.png)
+![](./IMG_MD/Register_Script_Rectangles.png)
 
 The code will create a simple animation of with the ai created model adding a material and a spin. 
 
