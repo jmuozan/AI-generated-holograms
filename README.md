@@ -326,9 +326,11 @@ The whole artifact consists of 32 pieces + the screen. All the dxf plans are ava
 
 ## - Final results and conclusions
 
-![]()
-
 We are happy with the final result but we would've love to have a newer screen to test it as the brightness wasn't that high and we could barely see it in normal conditions lightning. Even with that, our project underscores the potential of combining advanced software with hardware to create immersive visual experiences. Through a detailed instructions and a well-documented process, we provide a blueprint for others to replicate or build upon our work. This endeavor not only showcases the practical application of emerging technologies in creative industries but also highlights the importance of interdisciplinary collaboration in pushing the boundaries of what is possible.
+
+![](./IMG_MD/DD_Picture.jpeg)
+
+![](./IMG_MD/Final_result.gif)
 
 The successful execution of our project opens up new avenues for exploration in the realm of digital art, education, and entertainment, offering a glimpse into a future where ideas can be visualized in three-dimensional space with ease. As this technology continues to evolve, it holds the promise of further democratizing the creation of holographic content, making it accessible to a broader audience and inspiring the next generation of creators.
 
