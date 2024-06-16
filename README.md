@@ -28,6 +28,70 @@ The script automates the creation of a hologram from spoken words by transformin
   - 3 sheets (100x60) of 4mm plywood: For the base and the bottom of the structure
   - 1 sheet (100x60) of 4mm methacrylate: For the columns and the pyramid
   - Screen: The plans of the artifact are measured for a 30x26 cm screen. Be aware that as brighter the screen is a much better result you'll get. 
+## - Initial Idea
+
+The initial idea of the AI-generated-holograms project was to create a design assistant capable of transforming spoken descriptions into visual holographic representations. The goal was to develop a system that could take a user’s voice input, interpret the description, and generate either a 3D model or an image. This would then be projected as a hologram, allowing users to visualize their concepts in a tangible, interactive format. The project aims to bridge the gap between abstract ideas and concrete visualizations, providing a tool for creatives and non-creatives to better express and refine their ideas.
+
+## - Definition of Intellingence (Customer Definition) 
+
+In this project, intelligence means the system's ability to turn spoken language into meaningful visual displays accurately. This includes understanding the details of what the user says, choosing whether a 3D model or a 2D image is better, and then using advanced technology to create and show the hologram. We measure the system's intelligence by how well it understands the user, the quality of the visuals it creates, and how smoothly it combines different technologies to produce a clear hologram.
+
+## - Research References and Resources
+
+[DIY HOLOGRAMS 1](https://youtu.be/QPM1LwEzzwU?si=lN1u0pyrpN2pjjYs)
+
+[DIY HOLOGRAMS 2](https://youtu.be/aTB2ryoWIFU?si=VgQ2FmUnEJ8aMZJG)
+
+[Disney Hologram Article](https://www.latimes.com/entertainment-arts/story/2023-02-15/disney-unveils-hologram-walt-disney-disney-100)
+
+[Pepper's Ghost Illusion](https://www.twowaymirrors.com/peppers-ghost-illusion/)
+
+[Blender](https://www.blender.org/)
+
+[OpenAI](https://platform.openai.com/)
+
+[ZOOCAD Pricing](https://zoo.dev/pricing)
+
+[Modmatrix Repo](https://github.com/chris-ernst/modmatrix-ai)
+
+## - Game Plan
+
+1. **Research Phase**:
+
+- Study existing methods of generating holograms and voice-to-text technologies.
+
+2. **Design Phase**:
+
+- Design the overall system architecture, integrating voice recognition, 3D modeling, and holographic projection.
+- Sketch the artifact and create initial prototypes using CAD software.
+
+3. **Development Phase**:
+
+- Develop the main script (Main.py) to handle voice recognition, image/model generation, and video processing.
+- Create additional scripts for Blender automation (Blender_CAD.py) and hologram video layout (Hologram_Video_Layout.py).
+
+4. **Artifact Construction Phase**:
+
+- Use laser cutting to fabricate the components (CAD creation done before) of the hologram display artifact.
+- Assemble the artifact using plywood and methacrylate, ensuring precise measurements for optimal holographic projection.
+
+5. **Integration Phase**:
+
+- Integrate the software with the physical artifact, testing the workflow from voice input to holographic output.
+- Debug (a lot) and optimize the system for smooth operation and visual output.
+
+6. **Testing and Iteration Phase**:
+
+- Make necessary adjustments to the scripts and artifact design based on feedback and errors.
+
+7. **Finalization Phase**:
+
+- Document the entire process, including code comments and guidelines.
+
+8. **Presentation and Reflection Phase**:
+
+- Prepare a presentation to showcase (Design Dialogues II) the project.
+- Reflect on the project's outcomes.
 
 ## - Code
 
@@ -321,8 +385,6 @@ The whole artifact consists of 32 pieces + the screen. All the dxf plans are ava
 ![](./IMG_MD/DXF.png)
 
 ![](./IMG_MD/EXPLODED.png)
-
-
 
 ## - Final results and conclusions
 
