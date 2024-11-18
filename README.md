@@ -1,6 +1,6 @@
 # AI-generated-holograms
 
-###### ***[Vania Bisbal](https://vania-bisbal.github.io/repo-website/) - [Jorge Muñoz](https://jmuozan.github.io/jorgemunyozz.github.io/index.html)***
+###### **[Vania Bisbal](https://vania-bisbal.github.io/repo-website/) - [Jorge Muñoz](https://jmuozan.github.io/jorgemunyozz.github.io/index.html)**
 
 ----
 ## - About
